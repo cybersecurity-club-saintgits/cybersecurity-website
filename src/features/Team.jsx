@@ -4,98 +4,60 @@ import { useRef } from "react";
 
 const boardMembers = [
   {
-    name: "Justin Mathew",
-    role: "Faculty In Charge",
-    desc: "Faculty at Department of Computer Science",
-    image: "/Justinsir_img.jpg",
-    social: { linkedin: "https://www.linkedin.com/in/jaymat/", github: "#" },
+    name: "Amal Jebi",
+    role: "Lead",
+    desc: "Club Lead & Technical Director | Driving offensive security initiatives, workshops, and team excellence.",
+    image: "/amal.jpg",
+    social: { linkedin: "#", github: "#" },
   },
   {
-    name: "Alphin D Thomas",
-    role: "Chief Technical Officer",
-    desc: "National CTF Semi-Finalist | 3rd Year Computer Science Undergrad",
-    image: "/Alphin_img.jpg",
-    social: {
-      linkedin: "https://www.linkedin.com/in/alphin-d-thomas/",
-      github: "https://github.com/AlphinDThomas",
-    },
-  },
-
-  {
-    name: "Ashil James",
-    role: "CTF Team Captain",
-    desc: "Full Stack Dev | Competitive Programmer | CyberSecurity Intern @ One Team Solutions",
-    image: "/Ashil_img.JPG",
-    social: {
-      linkedin: "https://www.linkedin.com/in/ashil-george-james/",
-      github: "https://github.com/Ashil-James/",
-    },
-  },
-
-  {
-    name: "Aaron Bobby Jose",
-    role: "Tool Specialist / Lab Coordinator",
-    desc: "Cybersecurity Enthusiast | Web Exploitation & Reverse Engineering",
-    image: "/Aaron_img.png",
-    social: {
-      linkedin: "https://www.linkedin.com/in/aaron-bobby/",
-      github: "https://github.com/Aaron0745",
-    },
+    name: "Akul J",
+    role: "Co Lead",
+    desc: "Club Co-Lead | Coordinating operations, strategic planning, and community growth.",
+    image: "/akul.jpg",
+    social: { linkedin: "#", github: "#" },
   },
   {
-    name: "Diya Susan Mathew",
-    role: "Web & Infrastructure Admin",
-    desc: "Backend Developer Intern at Lauren | Frontend Developer at Tessat",
-    image: "/Diya_img.jpg",
-    social: {
-      linkedin: "https://www.linkedin.com/in/diya-susan-mathew-7186a3287/",
-      github: "https://github.com/Diya-Susan-Mathew/",
-    },
+    name: "Emil George",
+    role: "CTF Captain",
+    desc: "CTF Captain | Leading team training, binary exploitation, and competition strategy.",
+    image: "/emil.jpg",
+    social: { linkedin: "#", github: "#" },
   },
-
   {
-    name: "Angela Mary Thomas",
-    role: "Red Team Captain",
-    desc: "Ethical Hacking Enthusiast | Competitive Programmer | Interned @ OneTeam Solutions",
-    image: "/Angela_img.jpg",
-    social: {
-      linkedin: "https://www.linkedin.com/in/angela-mary-thomas/",
-      github: "https://github.com/AngelaMaryThomas",
-    },
+    name: "Bensen Thomas",
+    role: "Tool Specialist",
+    desc: "Tool Specialist | Security frameworks, lab tooling, and environment provisioning.",
+    image: "/ben.jpg",
+    social: { linkedin: "#", github: "#" },
   },
-
   {
-    name: "Jerit Reji",
-    role: "Research & Content",
-    desc: "FOSS Enthusiast | 3rd Year Computer Science Undergrad",
-    image: "/Jerit_img.jpg",
-    social: {
-      linkedin: "https://www.linkedin.com/in/jerit-reji-9186b2288/",
-      github: "#",
-    },
+    name: "Athul Jose",
+    role: "Infrastructure and web Administrator",
+    desc: "Infrastructure & Web Admin | Systems engineering, cloud platforms, and cyber web portal administration.",
+    image: "/athul.jpg",
+    social: { linkedin: "#", github: "#" },
   },
-
   {
-    name: "Sujith S",
-    role: "Blue Team Captain",
-    desc: "Backend Developer | Experienced in Java & Cybersecurity Tools",
-    image: "/Sujith_img.JPG",
-    social: {
-      linkedin:
-        "https://www.linkedin.com/in/sujith-s-800996297/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      github: "",
-    },
+    name: "Rebecca elizabeth",
+    role: "Event coordinator",
+    desc: "Event Coordinator | Organizing hackathons, speaker sessions, and national CTF engagements.",
+    image: "/rebecca.jpg",
+    social: { linkedin: "#", github: "#" },
   },
-
   {
-    name: "Mathew Tito",
-    role: "Community & Events",
-    desc: "3rd Year Computer Science Undergrad",
-    image: "/Mathew_img.jpg",
-    social: {
-      linkedin: "https://www.linkedin.com/in/mathew-tito-a68832298/",
-      github: "",
-    },
+    name: "Arha Suresh",
+    role: "Research and content lead",
+    desc: "Research & Content Lead | Cyber threat intelligence, curriculum design, and technical writing.",
+    image: "/arha.jpg",
+    social: { linkedin: "#", github: "#" },
+  },
+  {
+    name: "Anagha JM",
+    role: "documentation coordinator",
+    desc: "Documentation Coordinator | Managing official records, event reports, and club knowledge base.",
+    image: "/anagha.jpg",
+    social: { linkedin: "#", github: "#" },
   },
 ];
 
@@ -103,22 +65,20 @@ const boardMembers = [
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 60, scale: 0.92, rotateX: 8 },
+  hidden: { opacity: 0, y: 50, scale: 0.94 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    rotateX: 0,
     transition: {
       type: "spring",
-      stiffness: 80,
+      stiffness: 90,
       damping: 18,
-      mass: 0.8,
     },
   },
 };
@@ -166,10 +126,10 @@ function TiltCard({ children, index }) {
         willChange: "transform",
       }}
       whileHover={{
-        y: -12,
+        y: -10,
         transition: { type: "spring", stiffness: 300, damping: 20 },
       }}
-      className="team-card group relative rounded-3xl p-5 md:p-8 text-center flex flex-col h-full cursor-none overflow-hidden"
+      className="team-card group relative rounded-3xl p-5 md:p-6 text-center flex flex-col h-full cursor-none overflow-hidden"
     >
       {children}
     </motion.div>
@@ -244,7 +204,7 @@ export default function Team() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 xl:gap-10 2xl:gap-12 max-w-7xl 2xl:max-w-none mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 xl:gap-8 max-w-7xl 2xl:max-w-none mx-auto"
           style={{ perspective: 1000 }}
         >
           {boardMembers.map((member, index) => (

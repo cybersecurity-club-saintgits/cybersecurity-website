@@ -1,7 +1,7 @@
-import { motion, useInView } from "framer-motion";
+﻿import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState, useMemo } from "react";
 
-/* ── Animated typing text ── */
+/* ”€”€ Animated typing text ”€”€ */
 function TypeWriter({ text, delay = 0, speed = 60 }) {
   const [displayed, setDisplayed] = useState("");
   const ref = useRef(null);
@@ -35,7 +35,7 @@ function TypeWriter({ text, delay = 0, speed = 60 }) {
   );
 }
 
-/* ── Animated counter ── */
+/* ”€”€ Animated counter ”€”€ */
 function Counter({ target, suffix = "", duration = 2 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -65,7 +65,7 @@ function Counter({ target, suffix = "", duration = 2 }) {
   );
 }
 
-/* ── Floating particles ── */
+/* ”€”€ Floating particles ”€”€ */
 function Particles() {
   const particles = useMemo(() => Array.from({ length: 15 }, (_, i) => ({
     id: i,
@@ -112,7 +112,70 @@ function Particles() {
   );
 }
 
-/* ── Hero Stats ── */
+/* ”€”€ Hero Announcement Ticker (horizontal, inside Hero) ”€”€ */
+function HeroMemberTicker() {
+  const scrollToNewMembers = (e) => {
+    e.preventDefault();
+    document.getElementById("new-members")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Repeated text items for seamless scroll
+  const items = Array.from({ length: 12 }, (_, i) => i);
+
+  return (
+    <a
+      href="#new-members"
+      onClick={scrollToNewMembers}
+      className="block w-full overflow-hidden border-y border-cyan-500/20 bg-black/50 backdrop-blur-md relative group cursor-pointer hover:border-cyan-400/40 transition-colors duration-300"
+      title="View new members roster"
+    >
+      {/* Left fade */}
+      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/90 to-transparent z-10 pointer-events-none" />
+      {/* Right fade */}
+      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/90 to-transparent z-10 pointer-events-none" />
+
+      {/* Pinned label on left */}
+      <div className="absolute left-0 top-0 bottom-0 z-20 flex items-center">
+        <div className="flex items-center gap-2 px-4 h-full bg-gradient-to-r from-cyber-purple via-cyber-purple/80 to-transparent pr-10">
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-ping shrink-0" />
+          <span
+            className="text-[9px] font-bold tracking-[0.22em] uppercase text-white whitespace-nowrap"
+            style={{ fontFamily: "var(--font-mono)" }}
+          >
+            LIVE
+          </span>
+        </div>
+      </div>
+
+      {/* Scrolling ticker text */}
+      <div className="ticker-track py-2.5 pl-24">
+        {items.map((i) => (
+          <span key={i} className="inline-flex items-center gap-5 mr-10 shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+            <span
+              className="text-[11px] font-bold tracking-[0.28em] uppercase text-cyan-300 group-hover:text-white transition-colors whitespace-nowrap"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              NEW RECRUITS
+            </span>
+            <span
+              className="text-[10px] text-gray-500 whitespace-nowrap"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              2026 INDUCTION
+            </span>
+            <span className="text-cyan-500/60 text-xs"></span>
+          </span>
+        ))}
+      </div>
+
+      {/* Hover glow overlay */}
+      <div className="absolute inset-0 bg-cyan-500/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+    </a>
+  );
+}
+
+/* ”€”€ Hero Stats ”€”€ */
 const heroStats = [
   { value: 100, suffix: "+", label: "Active Members" },
   { value: 7, suffix: "+", label: "Events Hosted" },
@@ -122,15 +185,21 @@ const heroStats = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[80vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 md:pt-20 md:pb-0 bg-space-black">
-      {/* ── Background Effects ── */}
+    <section className="relative min-h-[80vh] md:min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24 pb-0 md:pt-20 bg-space-black">
+      
+      {/* ── Top Announcement Ticker ── */}
+      <div className="w-full relative z-40 mb-auto drop-shadow-2xl">
+        <HeroMemberTicker />
+      </div>
+
+      {/* Background Effects  */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-cyber-purple/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-cyber-blue/8 blur-[80px] md:blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute top-1/3 left-0 w-[150px] md:w-[300px] h-[150px] md:h-[300px] bg-cyber-red/5 blur-[60px] md:blur-[80px] rounded-full pointer-events-none" />
       <div className="perspective-grid pointer-events-none z-0" />
       <Particles />
 
-      {/* ── Floating Left Orb (Shield) ── */}
+      {/*Floating Left Orb (Shield) ”€”€ */}
       <motion.div
         animate={{ y: [15, -15, 15], rotate: [-2, 2, -2] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
@@ -167,7 +236,7 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* ── Floating Logo Orb ── */}
+      {/* ”€”€ Floating Logo Orb ”€”€ */}
       <motion.div
         animate={{ y: [-15, 15, -15], rotate: [0, 3, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -210,8 +279,8 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* ── Main Content ── */}
-      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
+      {/* ”€”€ Main Content ”€”€ */}
+      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center justify-center flex-1 my-auto">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -232,13 +301,13 @@ export default function Hero() {
           </h1>
 
           <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 mb-8 md:mb-12 max-w-2xl xl:max-w-4xl mx-auto leading-relaxed px-2 transition-all duration-300">
-            The premier student-led cybersecurity community at Saintgits — a
+            The premier student-led cybersecurity community at Saintgits ” a
             platform for 100+ members to learn, grow, and excel in the world
             of cybersecurity through hands-on CTFs, workshops, and
             industry mentorship.
           </p>
 
-          {/* ── CTA Buttons ── */}
+          {/* ”€”€ CTA Buttons ”€”€ */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 xl:mb-24">
             <a
               href="https://discord.gg/asjFQKE55p"
@@ -264,12 +333,12 @@ export default function Hero() {
                 animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
-                →
+
               </motion.span>
             </button>
           </div>
 
-          {/* ── Stats Ticker ── */}
+          {/* ”€”€ Stats Ticker ”€”€ */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -296,23 +365,23 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <span className="text-[10px] uppercase tracking-widest text-gray-600">
-          Scroll
-        </span>
-        <div className="w-5 h-8 rounded-full border border-white/10 flex items-start justify-center p-1">
-          <motion.div
-            className="w-1 h-2 rounded-full bg-cyber-purple"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </div>
-      </motion.div>
+      {/* ”€”€ New Recruits Announcement Ticker ” sits at the foot of the Hero ”€”€ */}
+      <div className="w-full mt-auto relative z-10">
+        <motion.div
+          className="flex flex-col items-center gap-2 mb-4 hidden md:flex"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <span className="text-[10px] uppercase tracking-widest text-gray-600">Scroll</span>
+          <div className="w-5 h-8 rounded-full border border-white/10 flex items-start justify-center p-1">
+            <motion.div
+              className="w-1 h-2 rounded-full bg-cyber-purple"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

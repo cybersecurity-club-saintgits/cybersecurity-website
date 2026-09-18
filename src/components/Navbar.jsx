@@ -15,7 +15,8 @@ export default function Navbar() {
   const navItems = [
     { name: "Operations", section: "ops" },
     { name: "Deployments", section: "deployments" },
-    { name: "Hall of Fame", section: "leaderboard" },
+    { name: "Hall of Fame", section: "achievements" },
+    { name: "New Members", section: "new-members" },
     { name: "Command Center", section: "team" },
   ];
 

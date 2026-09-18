@@ -21,11 +21,11 @@ const BOOT_SEQUENCE = [
     type: "banner",
   },
   {
-    text: "║   SAINTGITS CYBERSECURITY CLUB v2.0             ║",
+    text: "║   SAINTGITS CYBERSECURITY CLUB v2.0      ║",
     type: "banner",
   },
   {
-    text: "║   Members: 100+ | Status: OPERATIONAL        ║",
+    text: "║   Members: 100+ | Status: OPERATIONAL    ║",
     type: "banner",
   },
   {
@@ -34,7 +34,7 @@ const BOOT_SEQUENCE = [
   },
   { text: "", type: "break" },
   { text: "Welcome, Agent. All systems are online.", type: "welcome" },
-  { text: "Type 'help' to see active deployments.", type: "hint" },
+  { text: "Type '/help' to list available commands.", type: "hint" },
 ];
 
 const highlights = [
@@ -63,7 +63,14 @@ const highlights = [
 export default function AboutTerminal() {
   const [lines, setLines] = useState([]);
   const [hasStarted, setHasStarted] = useState(false);
+  const [bootDone, setBootDone] = useState(false);
+  const [inputVal, setInputVal] = useState("");
+  const [history, setHistory] = useState([]);
+  const [historyIdx, setHistoryIdx] = useState(-1);
+
   const sectionRef = useRef(null);
+  const terminalBodyRef = useRef(null);
+  const inputRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
@@ -71,13 +78,141 @@ export default function AboutTerminal() {
     setHasStarted(true);
 
     let delay = 0;
-    BOOT_SEQUENCE.forEach((line) => {
-      delay += line.type === "break" ? 100 : Math.random() * 300 + 150;
+    BOOT_SEQUENCE.forEach((line, index) => {
+      delay += line.type === "break" ? 100 : Math.random() * 250 + 120;
       setTimeout(() => {
         setLines((prev) => [...prev, line]);
+        if (index === BOOT_SEQUENCE.length - 1) {
+          setBootDone(true);
+        }
       }, delay);
     });
   }, [isInView, hasStarted]);
+
+  useEffect(() => {
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
+  }, [lines, bootDone]);
+
+  const handleTerminalClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const handleCommand = (e) => {
+    e.preventDefault();
+    const raw = inputVal.trim();
+    if (!raw) return;
+
+    setHistory((prev) => [...prev, raw]);
+    setHistoryIdx(-1);
+
+    const commandEntry = { text: raw, type: "user-command" };
+    const cmd = raw.toLowerCase();
+
+    let responses = [];
+
+    if (cmd === "/help" || cmd === "help") {
+      responses = [
+        { text: "=== AVAILABLE COMMANDS ===", type: "banner" },
+        { text: "  /help         - List all available terminal commands", type: "output" },
+        { text: "  /about        - About Saintgits Cybersecurity Club & mission", type: "output" },
+        { text: "  /events       - List our flagship CTFs, workshops & sessions", type: "output" },
+        { text: "  /team         - View the Command Center core team leads", type: "output" },
+        { text: "  /members      - View newly inducted 2026 recruits", type: "output" },
+        { text: "  /achievements - View our student awards & competition wins", type: "output" },
+        { text: "  /join         - Get the official Discord invite link", type: "output" },
+        { text: "  /clear        - Clear the terminal console", type: "output" },
+      ];
+    } else if (cmd === "/about" || cmd === "about") {
+      responses = [
+        { text: "--- SAINTGITS CYBERSECURITY CLUB ---", type: "banner" },
+        { text: "Premier student-led security community at Saintgits College of Engineering.", type: "output" },
+        { text: "100+ active members exploring CTFs, Web Exploitation, Forensics, and Reverse Engineering.", type: "output" },
+        { text: "Motto: Learn. Hack. Secure the Future.", type: "success" },
+      ];
+    } else if (cmd === "/events" || cmd === "events") {
+      responses = [
+        { text: "--- FLAGSHIP OPERATIONS & EVENTS ---", type: "banner" },
+        { text: "• Cybercrime Awareness & Investigation (with Kerala Police Academy)", type: "output" },
+        { text: "• Pegasus CTF 2026 - 16-Hour Intensive Hackathon", type: "output" },
+        { text: "• Forbidden Capture CTF - Campus-wide Challenge", type: "output" },
+        { text: "• Vulnerability Exploitation Hands-on Workshop", type: "output" },
+        { text: "Scroll down to Deployments section for in-depth timelines.", type: "hint" },
+      ];
+      document.getElementById("deployments")?.scrollIntoView({ behavior: "smooth" });
+    } else if (cmd === "/team" || cmd === "team") {
+      responses = [
+        { text: "--- CORE COMMAND CENTER (2026) ---", type: "banner" },
+        { text: "• Amal Jebi          - Lead", type: "output" },
+        { text: "• Akul J             - Co Lead", type: "output" },
+        { text: "• Emil George        - CTF Captain", type: "output" },
+        { text: "• Bensen Thomas      - Tool Specialist", type: "output" },
+        { text: "• Athul Jose         - Infrastructure and web Administrator", type: "output" },
+        { text: "• Rebecca elizabeth  - Event coordinator", type: "output" },
+        { text: "• Arha Suresh        - Research and content lead", type: "output" },
+        { text: "• Anagha JM          - Documentation coordinator", type: "output" },
+      ];
+      document.getElementById("team")?.scrollIntoView({ behavior: "smooth" });
+    } else if (cmd === "/members" || cmd === "members") {
+      responses = [
+        { text: "⚡ [NEW MEMBERS INDUCTED] ⚡", type: "banner" },
+        { text: "Official 2026 Batch induction roster is live! Redirecting...", type: "success" },
+      ];
+      document.getElementById("new-members")?.scrollIntoView({ behavior: "smooth" });
+    } else if (cmd === "/achievements" || cmd === "achievements") {
+      responses = [
+        { text: "--- HALL OF FAME HIGHLIGHTS ---", type: "banner" },
+        { text: "🏆 2nd Place — Code Crack CTF at FISAT", type: "success" },
+        { text: "🎯 YUKTHI 2025 Finalists — Tamil Nadu Police", type: "success" },
+        { text: "⭐ 13th out of 100+ Teams — Overcloaked CTF", type: "output" },
+        { text: "📖 Workshop at Carmel College of Engineering", type: "output" },
+      ];
+    } else if (cmd === "/join" || cmd === "join") {
+      responses = [
+        { text: "Join our official Discord community:", type: "output" },
+        { text: "👉 https://discord.gg/asjFQKE55p", type: "welcome" },
+      ];
+      window.open("https://discord.gg/asjFQKE55p", "_blank");
+    } else if (cmd === "/clear" || cmd === "clear") {
+      setLines([{ text: "Terminal cleared. Type '/help' for active commands.", type: "hint" }]);
+      setInputVal("");
+      return;
+    } else {
+      responses = [
+        {
+          text: `bash: ${raw}: command not found. Type '/help' to list options.`,
+          type: "error",
+        },
+      ];
+    }
+
+    setLines((prev) => [...prev, commandEntry, ...responses]);
+    setInputVal("");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (history.length === 0) return;
+      const nextIdx = historyIdx === -1 ? history.length - 1 : Math.max(0, historyIdx - 1);
+      setHistoryIdx(nextIdx);
+      setInputVal(history[nextIdx] || "");
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIdx === -1) return;
+      const nextIdx = historyIdx + 1;
+      if (nextIdx >= history.length) {
+        setHistoryIdx(-1);
+        setInputVal("");
+      } else {
+        setHistoryIdx(nextIdx);
+        setInputVal(history[nextIdx] || "");
+      }
+    }
+  };
 
   return (
     <section className="py-16 md:py-32 relative z-10" id="ops" ref={sectionRef}>
@@ -152,22 +287,29 @@ export default function AboutTerminal() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="terminal-window rounded-2xl overflow-hidden relative z-10"
+              onClick={handleTerminalClick}
+              className="terminal-window rounded-2xl overflow-hidden relative z-10 cursor-text shadow-[0_0_50px_rgba(122,0,255,0.15)] border border-white/10"
             >
               {/* Title bar */}
-              <div className="bg-white/5 border-b border-white/10 px-4 py-3 flex items-center">
+              <div className="bg-white/5 border-b border-white/10 px-4 py-3 flex items-center justify-between">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56] shadow-[0_0_10px_#ff5f56]" />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-[0_0_10px_#ffbd2e]" />
                   <div className="w-3 h-3 rounded-full bg-[#27c93f] shadow-[0_0_10px_#27c93f]" />
                 </div>
-                <div className="mx-auto text-xs text-gray-400 font-mono flex items-center gap-2">
-                  <Terminal className="w-3 h-3" /> root@saintgits-cyber — bash
+                <div className="text-xs text-gray-400 font-mono flex items-center gap-2">
+                  <Terminal className="w-3 h-3 text-cyber-purple" /> guest@saintgits-cyber:~
                 </div>
+                <span className="text-[10px] text-green-400 font-mono flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> LIVE
+                </span>
               </div>
 
               {/* Terminal body */}
-              <div className="p-4 md:p-6 h-[300px] md:h-[380px] font-mono text-xs md:text-sm overflow-y-auto flex flex-col gap-1 bg-[#020205]/80 custom-scrollbar">
+              <div
+                ref={terminalBodyRef}
+                className="p-4 md:p-6 h-[320px] md:h-[400px] font-mono text-xs md:text-sm overflow-y-auto flex flex-col gap-1.5 bg-[#020205]/90 custom-scrollbar"
+              >
                 {lines.map((line, idx) => {
                   if (line.type === "break")
                     return <div key={idx} className="h-2" />;
@@ -175,43 +317,73 @@ export default function AboutTerminal() {
                   const colorClass =
                     line.type === "command"
                       ? "text-green-400"
-                      : line.type === "success"
-                        ? "text-gray-300"
-                        : line.type === "banner"
-                          ? "text-cyber-purple font-bold"
-                          : line.type === "welcome"
-                            ? "text-cyber-blue font-bold text-base"
-                            : line.type === "hint"
-                              ? "text-gray-500"
-                              : "text-gray-400";
+                      : line.type === "user-command"
+                        ? "text-white font-semibold"
+                        : line.type === "success"
+                          ? "text-green-400"
+                          : line.type === "banner"
+                            ? "text-cyber-purple font-bold"
+                            : line.type === "welcome"
+                              ? "text-cyber-blue font-bold text-sm md:text-base"
+                              : line.type === "hint"
+                                ? "text-amber-300 font-medium"
+                                : line.type === "error"
+                                  ? "text-cyber-red font-medium"
+                                  : "text-gray-300";
 
                   return (
                     <motion.div
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, x: -6 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.15 }}
                       key={idx}
-                      className={colorClass}
+                      className={`${colorClass} leading-relaxed break-words`}
                     >
                       {line.type === "command" && (
-                        <span className="text-cyber-red mr-1">❯</span>
+                        <span className="text-cyber-red mr-1.5 font-bold">❯</span>
+                      )}
+                      {line.type === "user-command" && (
+                        <span className="text-cyan-400 mr-1.5 font-bold">guest@saintgits:~$</span>
                       )}
                       {line.type === "success" && (
-                        <span className="text-green-500 mr-1">✓</span>
+                        <span className="text-green-400 mr-1.5 font-bold">✓</span>
                       )}
                       {line.text}
                     </motion.div>
                   );
                 })}
-                {lines.length === BOOT_SEQUENCE.length && (
-                  <motion.div className="flex items-center gap-1 mt-2">
-                    <span className="text-cyber-red">❯</span>
+
+                {/* Interactive command input prompt */}
+                {bootDone && (
+                  <form onSubmit={handleCommand} className="flex items-center gap-2 mt-2 pt-1 border-t border-white/5">
+                    <span className="text-cyan-400 font-bold shrink-0 text-xs md:text-sm">guest@saintgits:~$</span>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={inputVal}
+                      onChange={(e) => setInputVal(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder="type /help for options..."
+                      className="bg-transparent border-none outline-none text-white font-mono text-xs md:text-sm w-full placeholder:text-gray-600 focus:ring-0 focus:outline-none"
+                      autoFocus
+                    />
                     <motion.div
                       animate={{ opacity: [0, 1, 0] }}
-                      transition={{ repeat: Infinity, duration: 1 }}
-                      className="w-2.5 h-5 bg-cyber-purple"
+                      transition={{ repeat: Infinity, duration: 0.8 }}
+                      className="w-2 h-4 bg-cyber-purple shrink-0"
                     />
-                  </motion.div>
+                  </form>
+                )}
+
+                {!bootDone && lines.length === BOOT_SEQUENCE.length && (
+                  <div className="flex items-center gap-1 mt-2">
+                    <span className="text-cyber-red font-bold">❯</span>
+                    <motion.div
+                      animate={{ opacity: [0, 1, 0] }}
+                      transition={{ repeat: Infinity, duration: 0.8 }}
+                      className="w-2.5 h-4 bg-cyber-purple"
+                    />
+                  </div>
                 )}
               </div>
             </motion.div>

@@ -5,7 +5,11 @@
   --color-cyber-red: #ff0055;
   --color-cyber-purple: #7a00ff;
   --color-cyber-blue: #0044ff;
-  --font-cyber: "Inter", sans-serif;
+  /* ── Font system ── */
+  --font-display: "Orbitron", sans-serif;      /* Section headings, hero titles    */
+  --font-body:    "Space Grotesk", sans-serif; /* Body text, cards, descriptions   */
+  --font-mono:    "JetBrains Mono", monospace; /* Code, badges, terminal, IDs      */
+  --font-cyber:   "Space Grotesk", sans-serif; /* legacy alias                     */
 }
 
 @layer base {
@@ -17,7 +21,7 @@
   body {
     background-color: var(--color-space-black);
     color: white;
-    font-family: var(--font-cyber);
+    font-family: var(--font-body);
     overflow-x: hidden;
     max-width: 100vw;
   }
@@ -423,7 +427,31 @@
     clip: rect(98px, 9999px, 34px, 0);
   }
 
+
   100% {
     clip: rect(21px, 9999px, 89px, 0);
   }
 }
+
+/* ═══════════════════════════════════════════
+   NEW MEMBERS TICKER
+   ═══════════════════════════════════════════ */
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 40s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}

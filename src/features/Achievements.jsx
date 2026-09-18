@@ -74,7 +74,7 @@ const achievements = [
 
 export default function Achievements() {
     return (
-        <section className="py-16 md:py-28 relative z-10 overflow-hidden">
+        <section className="py-16 md:py-28 relative z-10 overflow-hidden" id="achievements">
             <div className="bg-orb bg-cyber-red w-[30rem] h-[30rem] -right-20 top-0" />
 
             <div className="container mx-auto px-6 max-w-7xl 2xl:max-w-[1600px] relative">
